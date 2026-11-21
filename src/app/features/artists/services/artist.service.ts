@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../enviroments/enviroments';
 import { Artist, ArtistDto } from '../models/artist.model';
-import { ArtistAlbum } from '../../albums/models/ablum.model';
+import { ArtistAlbum } from '../../albums/models/album.model';
 
 @Injectable({ providedIn: 'root' })
 export class ArtistService {

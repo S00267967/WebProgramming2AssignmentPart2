@@ -1,0 +1,30 @@
+<div class="page-header">
+  <h1>Artists</h1>
+  <a class="btn primary" routerLink="/artists/new">Add artist</a>
+</div>
+
+@let s = state();
+@if (s.status === 'loading') {
+  <p class="status" role="status">Loading artists...</p>
+} @else if (s.status === 'error') {
+  <p class="error" role="alert">{{ s.message }}</p>
+} @else if (s.data.length === 0) {
+  <p>No artists yet. Add the first one.</p>
+} @else {
+  <div class="grid">
+    @for (artist of s.data; track artist._id) {
+      <article class="card">
+        <h2>{{ artist.name }}</h2>
+        @if (artist.country) {
+          <p class="subtitle">{{ artist.country }}</p>
+        }
+        @if (artist.formedYear) {
+          <p>Formed in {{ artist.formedYear }}</p>
+        }
+        <div class="actions">
+          <a class="btn" [routerLink]="['/artists', artist._id]" [attr.aria-label]="'View ' + artist.name">View</a>
+        </div>
+      </article>
+    }
+  </div>
+}

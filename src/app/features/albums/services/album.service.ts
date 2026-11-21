@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../enviroments/enviroments';
-import { Album, AlbumDto, AlbumFilters } from '../models/ablum.model';
+import { Album, AlbumDto, AlbumFilters } from '../models/album.model';
 
 @Injectable({ providedIn: 'root' })
 export class AlbumService {

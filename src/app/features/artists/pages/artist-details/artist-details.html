@@ -1,0 +1,45 @@
+@let s = state();
+@if (s.status === 'loading') {
+  <p class="status" role="status">Loading artist...</p>
+} @else if (s.status === 'error') {
+  <p class="error" role="alert">{{ s.message }}</p>
+  <a class="btn" routerLink="/artists">Back to artists</a>
+} @else {
+  <h1>{{ s.data.name }}</h1>
+  @if (s.data.country) {
+    <p>Country: {{ s.data.country }}</p>
+  }
+  @if (s.data.formedYear) {
+    <p>Formed: {{ s.data.formedYear }}</p>
+  }
+
+  <div class="actions">
+    <a class="btn primary" [routerLink]="['/artists', s.data._id, 'edit']">Edit</a>
+    <button class="btn" type="button" (click)="deleteArtist(s.data)" [disabled]="deleting()">Delete</button>
+    <a class="btn" routerLink="/artists">Back</a>
+  </div>
+  @if (deleteError(); as message) {
+    <p class="error" role="alert">{{ message }}</p>
+  }
+
+  <h2>Albums</h2>
+  @let a = albums();
+  @if (a.status === 'loading') {
+    <p class="status" role="status">Loading albums...</p>
+  } @else if (a.status === 'error') {
+    <p class="error" role="alert">{{ a.message }}</p>
+  } @else if (a.data.length === 0) {
+    <p>No albums for this artist yet.</p>
+  } @else {
+    <ul>
+      @for (album of a.data; track album._id) {
+        <li>
+          <a [routerLink]="['/albums', album._id]">{{ album.title }}</a>
+          @if (album.releaseYear) {
+            ({{ album.releaseYear }})
+          }
+        </li>
+      }
+    </ul>
+  }
+}

@@ -1,0 +1,51 @@
+<div class="page-header">
+  <h1>Albums</h1>
+  <a class="btn primary" routerLink="/albums/new">Add album</a>
+</div>
+
+<form [formGroup]="filters" class="filters" role="search" aria-label="Filter albums">
+  <div class="field">
+    <label for="genre">Filter by genre</label>
+    <input id="genre" formControlName="genre" placeholder="e.g. Rock" />
+  </div>
+
+  <div class="field">
+    <label for="sort">Sort by</label>
+    <select id="sort" formControlName="sort">
+      <option value="title">Title (A-Z)</option>
+      <option value="-releaseYear">Newest first</option>
+      <option value="releaseYear">Oldest first</option>
+      <option value="-rating">Highest rated</option>
+    </select>
+  </div>
+</form>
+
+@let s = state();
+@if (s.status === 'loading') {
+  <p class="status" role="status">Loading albums...</p>
+} @else if (s.status === 'error') {
+  <p class="error" role="alert">{{ s.message }}</p>
+} @else if (s.data.length === 0) {
+  <p>No albums found.</p>
+} @else {
+  <div class="grid">
+    @for (album of s.data; track album._id) {
+      <article class="card">
+        <h2>{{ album.title }}</h2>
+        <p class="subtitle">{{ album.artist.name }}</p>
+        @if (album.releaseYear) {
+          <p>Released: {{ album.releaseYear }}</p>
+        }
+        @if (album.genre) {
+          <p>Genre: {{ album.genre }}</p>
+        }
+        @if (album.rating !== null && album.rating !== undefined) {
+          <p>Rating: {{ album.rating }}/10</p>
+        }
+        <div class="actions">
+          <a class="btn" [routerLink]="['/albums', album._id]" [attr.aria-label]="'View ' + album.title">View</a>
+        </div>
+      </article>
+    }
+  </div>
+}

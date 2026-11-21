@@ -1,0 +1,31 @@
+@let s = state();
+@if (s.status === 'loading') {
+  <p class="status" role="status">Loading album...</p>
+} @else if (s.status === 'error') {
+  <p class="error" role="alert">{{ s.message }}</p>
+  <a class="btn" routerLink="/albums">Back to albums</a>
+} @else {
+  <h1>{{ s.data.title }}</h1>
+  <p>
+    Artist:
+    <a [routerLink]="['/artists', s.data.artist._id]">{{ s.data.artist.name }}</a>
+  </p>
+  @if (s.data.releaseYear) {
+    <p>Released: {{ s.data.releaseYear }}</p>
+  }
+  @if (s.data.genre) {
+    <p>Genre: {{ s.data.genre }}</p>
+  }
+  @if (s.data.rating !== null && s.data.rating !== undefined) {
+    <p>Rating: {{ s.data.rating }}/10</p>
+  }
+
+  <div class="actions">
+    <a class="btn primary" [routerLink]="['/albums', s.data._id, 'edit']">Edit</a>
+    <button class="btn" type="button" (click)="deleteAlbum(s.data)" [disabled]="deleting()">Delete</button>
+    <a class="btn" routerLink="/albums">Back</a>
+  </div>
+  @if (deleteError(); as message) {
+    <p class="error" role="alert">{{ message }}</p>
+  }
+}

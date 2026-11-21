@@ -1,0 +1,48 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form" novalidate>
+  <h1>{{ id() ? 'Edit artist' : 'Add artist' }}</h1>
+
+  <div class="field">
+    <label for="name">Name</label>
+    <input id="name" formControlName="name" placeholder="e.g. Radiohead" autocomplete="off"
+      [class.invalid]="form.controls.name.touched && form.controls.name.invalid" />
+    @if (showError('name', 'required')) {
+      <p class="field-error" role="alert">Name is required</p>
+    } @else if (showError('name', 'maxlength')) {
+      <p class="field-error" role="alert">Name must be 100 characters or fewer</p>
+    }
+  </div>
+
+  <div class="field">
+    <label for="country">Country</label>
+    <input id="country" formControlName="country" placeholder="e.g. United Kingdom"
+      [class.invalid]="form.controls.country.touched && form.controls.country.invalid" />
+    <span class="hint">Optional</span>
+    @if (showError('country', 'maxlength')) {
+      <p class="field-error" role="alert">Country must be 100 characters or fewer</p>
+    }
+  </div>
+
+  <div class="field">
+    <label for="formedYear">Year formed</label>
+    <input id="formedYear" type="number" formControlName="formedYear" placeholder="e.g. 1985"
+      [class.invalid]="form.controls.formedYear.touched && form.controls.formedYear.invalid" />
+    <span class="hint">Optional</span>
+    @if (showError('formedYear', 'min')) {
+      <p class="field-error" role="alert">Year must be 1900 or later</p>
+    } @else if (showError('formedYear', 'max')) {
+      <p class="field-error" role="alert">Year cannot be after {{ currentYear }}</p>
+    }
+  </div>
+
+  @if (saving()) {
+    <p class="status" role="status">Saving...</p>
+  }
+  @if (saveError(); as message) {
+    <p class="error" role="alert">{{ message }}</p>
+  }
+
+  <div class="actions">
+    <button class="btn primary" type="submit" [disabled]="saving()">Save artist</button>
+    <a class="btn" routerLink="/artists">Cancel</a>
+  </div>
+</form>
