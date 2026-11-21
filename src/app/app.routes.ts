@@ -1,34 +1,40 @@
 import { Routes } from '@angular/router';
-import { CarList } from './features/cars/pages/car-list/car-list';
-import { CarForm } from './features/cars/components/car-form/car-form';
-import { CarDetails } from './features/cars/pages/car-details/car-details';
 
+// loadComponent = lazy loading, each page is only downloaded when first visited
+// 'new' routes are listed before ':id' so "new" is not treated as an id
 export const routes: Routes = [
-    {
-      path: '',
-      redirectTo: 'cars',
-      pathMatch: 'full'
-    },
-    {
-      path: 'cars',
-      component: CarList
-    },
-    {
-        path: 'cars/new',
-        component: CarForm
-      },
-      {
-        path: 'cars/:id',
-        component: CarDetails
-      },
-      {
-        path: 'cars/new',
-        component: CarForm
-      },
-      {
-        path: 'cars/:id/edit',
-        component: CarForm
-      }
-    
-  ];
-  
+  { path: '', redirectTo: 'albums', pathMatch: 'full' },
+  {
+    path: '',
+    title: 'Albums'
+  },
+  {
+    path: 'albums/new',
+    title: 'New album'
+  },
+  {
+    path: '',
+    title: 'Album details'
+  },
+  {
+    path: '',
+    title: 'Edit album'
+  },
+  {
+    path: '',
+    title: 'Artists'
+  },
+  {
+    path: '',
+    title: 'New artist'
+  },
+  {
+    path: '',
+    title: 'Artist details'
+  },
+  {
+    path: '',
+    title: 'Edit artist'
+  },
+  { path: '**', redirectTo: 'albums' },
+];

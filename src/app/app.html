@@ -1,2 +1,17 @@
-<h1>2026 Client Application for Worksheets</h1>
-<router-outlet />
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="toolbar">
+  <a class="brand" routerLink="/albums" aria-label="Music Library home">
+    <span class="brand-icon" aria-hidden="true">♪</span>
+    <span class="brand-text">Music Library</span>
+  </a>
+  <span class="spacer"></span>
+  <nav aria-label="Main navigation">
+    <a matButton routerLink="/albums" routerLinkActive="active" ariaCurrentWhenActive="page">Albums</a>
+    <a matButton routerLink="/artists" routerLinkActive="active" ariaCurrentWhenActive="page">Artists</a>
+  </nav>
+</header>
+
+<main id="main" class="page">
+  <router-outlet />
+</main>
